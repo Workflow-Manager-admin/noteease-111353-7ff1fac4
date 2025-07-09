@@ -1,104 +1,323 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #1976D2;
+  --secondary: #90CAF9;
+  --accent: #FFC107;
+
+  --bg-main: #fff;
+  --bg-panel: #f7f8fa;
+  --text-main: #24292f;
+  --text-dim: #808a96;
+  --border: #e3e7ea;
+  --error: #d73a49;
+
+  --sidebar-width: 280px;
+  --shadow: 0 1px 6px rgba(16,32,56,0.09);
+
+  --fab-size: 56px;
+  --fab-bg: var(--accent);
+  --fab-text: #212121;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+.notes-app-container {
+  background: var(--bg-main);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.notes-app-header {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  padding: 18px 0 10px 0;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.notes-main {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.notes-sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.notes-detail-view {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+}
+
+.notes-footer {
+  background: none;
+  text-align: center;
+  padding: 0.5rem 0 1rem 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  letter-spacing: 0.01em;
+}
+
+/* Notes List */
+.notes-list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.notes-list-header {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 20px 24px 10px 24px;
+  color: var(--primary);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+.notes-list-loading,
+.notes-list-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+.notes-list-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1 1 0;
+}
+.notes-list-item {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 22px;
+  background: none;
+  cursor: pointer;
+  transition: background 0.18s;
+  color: var(--text-main);
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+}
+.notes-list-item.selected, .notes-list-item:active {
+  background: var(--secondary);
+}
+.notes-list-item:hover {
+  background: #e3f0fc;
+}
+.list-note-title {
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin-bottom: 2px;
+  color: var(--primary);
+}
+.list-note-date {
+  color: var(--text-dim);
+  font-size: 0.92em;
+  letter-spacing: 0.01em;
+}
+
+/* NoteDetail */
+.notes-detail-view {
+  padding: 0;
+  display: flex;
+}
+.note-detail-empty {
+  color: var(--text-dim);
+  margin: auto;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.note-detail-viewer {
+  padding: 38px 36px 16px 36px;
+  max-width: 600px;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.note-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.note-detail-header h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary);
+  word-break: break-word;
+}
+.note-detail-date {
+  font-size: 0.97em;
+  color: var(--text-dim);
+}
+.note-detail-content {
+  white-space: pre-wrap;
+  font-size: 1.09em;
+  min-height: 110px;
+  color: var(--text-main);
+  margin-bottom: 1.5em;
+}
+.note-detail-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5em;
+}
+
+/* Editing form */
+.note-detail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 36px 36px 16px 36px;
+  margin: auto;
+  width: 100%;
+  max-width: 600px;
+}
+.note-input {
+  padding: 13px 12px;
+  font-size: 1.07em;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  outline: none;
+  resize: none;
+  background: #fff;
+  color: var(--text-main);
+  transition: border 0.16s;
+  font-family: inherit;
+}
+.note-title-input {
+  font-size: 1.22rem;
+  font-weight: 600;
+}
+.note-input:focus {
+  border: 1.5px solid var(--primary);
+}
+.note-btn {
+  padding: 7px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  font-size: 1.05em;
+  cursor: pointer;
+  transition: box-shadow 0.17s, background 0.16s;
+  outline: none;
+}
+.note-btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+.note-btn.secondary {
+  background: var(--secondary);
+  color: var(--primary);
+}
+.note-btn.danger {
+  background: var(--error);
+  color: #fff;
+}
+.note-btn:active {
+  filter: brightness(0.98);
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 34px;
+  right: 34px;
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border-radius: 50%;
+  background: var(--fab-bg);
+  color: var(--fab-text);
+  border: none;
+  box-shadow: 0 4px 12px 0 rgba(25, 118, 210, 0.10), 0 1.5px 6px 0 rgba(0,0,0,0.07);
+  font-size: 2.5rem;
+  font-weight: 700;
+  z-index: 99;
+  transition: box-shadow 0.22s, background 0.16s;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+}
+.fab:hover {
+  background: #ffe082;
+  box-shadow: 0 6px 18px 0 rgba(25, 118, 210, 0.12);
+}
+.fab:active {
+  background: #ffd54f;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Minimal scrollbar */
+.notes-list-ul {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg-panel);
+}
+.notes-list-ul::-webkit-scrollbar {
+  width: 8px;
+  background: var(--bg-panel);
+}
+.notes-list-ul::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 6px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive Design */
+@media (max-width: 880px) {
+  .notes-app-header {
+    padding: 12px 0 7px 0;
   }
-  to {
-    transform: rotate(360deg);
+  .notes-sidebar {
+    width: 190px;
+    font-size: 0.98em;
+  }
+  .note-detail-viewer,
+  .note-detail-form {
+    padding: 20px 10px 10px 10px;
   }
 }
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
+@media (max-width: 640px) {
+  .notes-main {
+    flex-direction: column;
+  }
+  .notes-sidebar {
+    width: 100%;
+    min-height: 42px;
+    height: 134px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    font-size: 0.98em;
+    padding-bottom: 0;
+  }
+  .notes-detail-view {
+    padding: 0;
+  }
+  .fab {
+    bottom: 15px;
     right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
   }
 }
